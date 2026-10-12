@@ -14,19 +14,19 @@ class SimpleHandler(BaseHTTPRequestHandler):
         self.wfile.write(b"Bot is Running 24/7!")
 
     def log_message(self, format, *args):
-        return  # Render logs clean rakhne ke liye HTTP logs disable kiye hain
+        return
 
 def start_server():
     port = int(os.environ.get("PORT", 10000))
     server = HTTPServer(('0.0.0.0', port), SimpleHandler)
     server.serve_forever()
 
-# Background me Web Server start karein
 server_thread = threading.Thread(target=start_server, daemon=True)
 server_thread.start()
 
-# ----------------- 2. DISCORD AUTO-POSTER LOGIC ----------------- #
-USER_TOKEN = os.environ.get("USER_TOKEN")
+# ----------------- 2. DISCORD BOT LOGIC ----------------- #
+# Render environment variable se Bot Token uthayega
+BOT_TOKEN = os.environ.get("BOT_TOKEN") or os.environ.get("USER_TOKEN")
 CHANNEL_ID = "1410924658840178738"
 
 paragraphs = [
@@ -84,7 +84,7 @@ paragraphs = [
 
 url = f"https://discord.com/api/v9/channels/{CHANNEL_ID}/messages"
 headers = {
-    "Authorization": USER_TOKEN,
+    "Authorization": f"Bot {BOT_TOKEN}",  # Official Bot Token ke liye 'Bot ' prefix zaroori hai
     "Content-Type": "application/json"
 }
 
@@ -92,9 +92,8 @@ available_paragraphs = paragraphs.copy()
 random.shuffle(available_paragraphs)
 msg_count = 0
 
-print("[+] Secondary Account Auto-Poster Started!", flush=True)
+print("[+] Official Bot Auto-Poster Started!", flush=True)
 
-# App start hote hi thoda wait karenge
 print("[INFO] Bot starting up, waiting 15 seconds before first message...", flush=True)
 time.sleep(15)
 
