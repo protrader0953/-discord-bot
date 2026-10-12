@@ -115,7 +115,10 @@ while True:
             time.sleep(wait_time)
 
         elif response.status_code == 429:
-            retry_after = response.json().get("retry_after", 120)
+            try:
+                retry_after = response.json().get("retry_after", 120)
+            except Exception:
+                retry_after = 120  # Fallback agar response khali ho
             print(f"[RATE LIMIT] Waiting for {retry_after} seconds...", flush=True)
             time.sleep(retry_after + 5)
 
