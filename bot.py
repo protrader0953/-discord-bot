@@ -45,7 +45,7 @@ paragraphs = [
     (
         "Fibonacci retracement and extension levels serve as mathematical reference points derived from natural "
         "mathematical sequences that frequently act as inflection points during market pullbacks. When combined "
-        "with structural support and resistance zones, these ratios help traders locate high-probability areas "
+        "dengan structural support and resistance zones, these ratios help traders locate high-probability areas "
         "to manage risk and optimize their reward-to-risk ratios."
     ),
     (
@@ -110,7 +110,10 @@ while True:
         if response.status_code in (200, 201):
             msg_count += 1
             print(f"[{time.strftime('%H:%M:%S')}] Message #{msg_count} Sent Successfully!", flush=True)
-            wait_time = random.randint(305, 320)
+            
+            # Har 5 minute (300 seconds) ka gap set kiya gaya hai
+            wait_time = 300 
+            
             print(f"[WAIT] Next message in {wait_time // 60} minutes ({wait_time} seconds)...", flush=True)
             time.sleep(wait_time)
 
